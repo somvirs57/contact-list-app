@@ -31,7 +31,7 @@ const ContactListForm = (props) => {
   const { contactType } = props;
 
   useEffect(() => {
-    if (contactUpdateMode) {
+    if (contactUpdateMode && contacts.length > 0) {
       const contactToUpdate = contacts.filter(
         (item) => item.contactId === updateContactId
       );
@@ -41,13 +41,14 @@ const ContactListForm = (props) => {
       setEmail(contactToUpdate[0].email);
       setMobile(contactToUpdate[0].mobile);
     } else {
+      dispatch(contactActions.setAdditionRequired());
       setContactId("");
       setName("");
       setGender(genders.MALE);
       setEmail("");
       setMobile("");
     }
-  }, [contactUpdateMode, updateContactId, contacts]);
+  }, [contactUpdateMode, updateContactId, contacts, dispatch]);
 
   const nameChangeHandler = (e) => {
     setName(nameRef.current.value);
