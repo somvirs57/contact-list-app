@@ -43,7 +43,7 @@ const ContactListForm = (props) => {
     } else {
       setContactId("");
       setName("");
-      setGender("");
+      setGender(genders.MALE);
       setEmail("");
       setMobile("");
     }
@@ -89,6 +89,8 @@ const ContactListForm = (props) => {
       );
       return;
     }
+
+    console.log({ name, gender, email, mobile });
 
     if (!formValid()) {
       setFormError("check fields and try again");
