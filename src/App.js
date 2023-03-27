@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import store from "./store";
+import { Provider } from "react-redux";
+import ContactListForm from "./components/ContactListForm";
+import AddButtons from "./components/AddButtons";
+import ContactList from "./components/ContactList";
+import ContactData from "./components/ContactData";
+import { contactTypes } from "./Utility/constants";
 
 function App() {
+  const [contactType, setContactType] = useState(contactTypes.PERSONAL);
+
+  const contactTypeChangeHandler = (type) => {
+    setContactType(type);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <div className="contactDetails">
+          <ContactList />
+        </div>
+        <div className="addContact">
+          <div className="formContainer">
+            <AddButtons
+              contactType={contactType}
+              contactTypeChangeHandler={contactTypeChangeHandler}
+            />
+            <ContactListForm contactType={contactType} />
+          </div>
+          <ContactData />
+        </div>
+      </div>
+    </Provider>
   );
 }
 
